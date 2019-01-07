@@ -61,6 +61,10 @@ class BurgerBuilder extends Component {
         this.setState({ showOrderModal: false })
     }
 
+    checkout = () => {
+        alert('Order placed');
+    }
+
     render() {
         let removeDisabledInfo = {};
         Object.keys(this.state.ingredients).forEach(ingKey => {
@@ -69,7 +73,12 @@ class BurgerBuilder extends Component {
         return (
             <>
                 <Modal show={this.state.showOrderModal} modalClosed={this.cancelPurchase}>
-                    <OrderSummary ingredients={this.state.ingredients} />
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        close={this.cancelPurchase}
+                        checkout={this.checkout}
+                        totalPrice={this.state.totalPrice}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BurgerBuildControls
