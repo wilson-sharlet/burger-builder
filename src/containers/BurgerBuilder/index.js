@@ -4,7 +4,6 @@ import Burger from '../../components/Burger';
 import BurgerBuildControls from '../../components/Burger/BurgerBuildControls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
-import Spinner from '../../components/UI/Spinner';
 import withError from '../../hoc/withError';
 
 const INGREDIENT_RATES = {
@@ -26,7 +25,6 @@ class BurgerBuilder extends Component {
             },
             totalPrice: 0,
             showOrderModal: false,
-            ordering: false,
         }
     }
 
@@ -66,24 +64,11 @@ class BurgerBuilder extends Component {
     }
 
     checkout = () => {
-        // this.setState({ ordering: true });
-        // axios.post('https://test.firebaseio.com/orders.json', {
-        //     ingredients: this.state.ingredients,
-        //     totalPrice: this.state.totalPrice,
-        //     user: {
-        //         name: 'Test'
-        //     }
-        // }).then((response) => {
-        //     console.log(response);
-        //     this.setState({ ordering: false, showOrderModal: false })
-        // }).catch((error) => {
-        //     console.log(error);
-        //     this.setState({ ordering: false, showOrderModal: false })
-        // })
         const queryParams = [];
-        for(let i in this.state.ingredients) {
-            queryParams.push(encodeURIComponent(i)+'='+encodeURIComponent(this.state.ingredients[i]));
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
         }
+        queryParams.push('price=' + this.state.totalPrice);
         const queryString = queryParams.join('&');
 
         this.props.history.push({
@@ -97,19 +82,15 @@ class BurgerBuilder extends Component {
         Object.keys(this.state.ingredients).forEach(ingKey => {
             removeDisabledInfo[ingKey] = (this.state.ingredients[ingKey] <= 0)
         });
-        let modalContent = (<OrderSummary
-            ingredients={this.state.ingredients}
-            close={this.cancelPurchase}
-            checkout={this.checkout}
-            totalPrice={this.state.totalPrice}
-        />);
-        if (this.state.ordering) {
-            modalContent = <Spinner />
-        }
         return (
             <>
                 <Modal show={this.state.showOrderModal} modalClosed={this.cancelPurchase}>
-                    {modalContent}
+                    <OrderSummary
+                        ingredients={this.state.ingredients}
+                        close={this.cancelPurchase}
+                        checkout={this.checkout}
+                        totalPrice={this.state.totalPrice}
+                    />
                 </Modal>
                 <Burger ingredients={this.state.ingredients} />
                 <BurgerBuildControls
