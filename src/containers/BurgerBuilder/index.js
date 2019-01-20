@@ -6,7 +6,7 @@ import BurgerBuildControls from '../../components/Burger/BurgerBuildControls';
 import Modal from '../../components/UI/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary';
 import withError from '../../hoc/withError';
-import * as actions from '../../store/actions';
+import * as burgerBuilderActions from '../../store/actions';
 
 class BurgerBuilder extends Component {
     constructor() {
@@ -73,8 +73,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    addIngredientHandler: (ingredient) => dispatch({ type: actions.ADD_INGREDIENT, ingredient }),
-    removeIngredientHandler: (ingredient) => dispatch({ type: actions.REMOVE_INGREDIENT, ingredient }),
+    addIngredientHandler: (ingredient) => dispatch(burgerBuilderActions.addIngredient(ingredient)),
+    removeIngredientHandler: (ingredient) => dispatch(burgerBuilderActions.removeIngredient(ingredient)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(withError(BurgerBuilder, axios));
