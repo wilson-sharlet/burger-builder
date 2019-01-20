@@ -11,7 +11,7 @@ import reducer from './store/reducer';
 
 axios.defaults.baseURL = 'https://burger-builder-1ad88.firebaseio.com';
 
-const store = createStore(reducer);
+const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 ReactDOM.render(<Provider store={store}>
     <BrowserRouter><App /></BrowserRouter>
