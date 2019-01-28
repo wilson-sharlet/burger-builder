@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../../axios-orders';
 import { connect } from 'react-redux';
 import Burger from '../../components/Burger';
 import BurgerBuildControls from '../../components/Burger/BurgerBuildControls';
@@ -9,7 +9,7 @@ import Spinner from '../../components/UI/Spinner';
 import withError from '../../hoc/withError';
 import * as burgerBuilderActions from '../../store/actions';
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
     constructor() {
         super();
         this.state = {
